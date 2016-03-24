@@ -11,6 +11,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="test1 test2" />
 				<Compiler>
 					<Add option="-g" />
 					<Add directory="include" />
@@ -34,11 +35,15 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="include/Algorithm.h" />
 		<Unit filename="include/InputFIle.h" />
 		<Unit filename="include/OutputFile.h" />
+		<Unit filename="include/Structures.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Algorithm.cpp" />
 		<Unit filename="src/InputFIle.cpp" />
 		<Unit filename="src/OutputFile.cpp" />
+		<Unit filename="src/Structures.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />

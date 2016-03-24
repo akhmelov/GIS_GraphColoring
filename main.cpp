@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "InputFIle.h"
+
 using namespace std;
 
 int main(int argc, char ** argv)
@@ -23,6 +25,11 @@ int main(int argc, char ** argv)
     }
     cout << "From file: " << inFilePath << endl;
     cout << "To file: " << outFilePath << endl;
+
+    InputFile inputFile;
+    inputFile.makeGraph(inFilePath);
+
+
     cout << "Hello world!" << endl;
     return 0;
 }

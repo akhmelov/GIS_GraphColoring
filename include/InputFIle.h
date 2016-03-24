@@ -1,12 +1,22 @@
 #ifndef INPUTFILE_H
 #define INPUTFILE_H
 
+#include <sstream>
+#include <string>
+#include <fstream>
 
-class InputFIle
+#include "Structures.h"
+
+
+using namespace std;
+
+class InputFile
 {
     public:
-        InputFIle();
-        virtual ~InputFIle();
+        Graph makeGraph(string path);
+
+        InputFile();
+        virtual ~InputFile();
     protected:
     private:
 };
