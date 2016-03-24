@@ -14,11 +14,17 @@ GraphColoring Algorithm::algorithm(Graph &graph)
 {
     GraphColoring graphColoring;
     for(auto const &ent1 : graph) {
+        set<int> colorUsed; //which colors already checked and not suitable
         graphColoring[ent1.first] = getColor(0);
+        colorUsed.insert(graphColoring[ent1.first]); //insert forbidden color
         for(auto const &ent2 : ent1.second) {
             if(ent2.second){    //it's ent1's neighbour
                 while(graphColoring[ent2.first] == graphColoring[ent1.first]){
+                    int newColor = getColor(graphColoring[ent1.first]);
+                    while(!isColorAllowed(newColor, colorUsed))
+                        newColor = getColor(newColor);
                     graphColoring[ent1.first] = getColor(graphColoring[ent1.first]);
+                    colorUsed.insert(graphColoring[ent1.first]); //insert forbidden color
                 }
             }
         }
@@ -43,4 +49,10 @@ int Algorithm::getColor(int presentColor)
         }
     }
     return presentColor;
+}
+
+bool Algorithm::isColorAllowed(int newColor, set<int> &colorUsed)
+{
+    set<int>::iterator it = find(colorUsed.begin(), colorUsed.end(), newColor);
+    return colorUsed.end() == it;
 }

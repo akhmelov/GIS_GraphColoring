@@ -21,7 +21,7 @@ class Algorithm
         set<int> colors;
 
         int getColor(int);
-        void resetColor();
+        bool isColorAllowed(int newColor, set<int> &colorUsed);
 
 };
 
