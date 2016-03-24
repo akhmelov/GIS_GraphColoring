@@ -23,7 +23,7 @@ GraphColoring Algorithm::algorithm(Graph &graph)
                     int newColor = getColor(graphColoring[ent1.first]);
                     while(!isColorAllowed(newColor, colorUsed))
                         newColor = getColor(newColor);
-                    graphColoring[ent1.first] = getColor(graphColoring[ent1.first]);
+                    graphColoring[ent1.first] = newColor;
                     colorUsed.insert(graphColoring[ent1.first]); //insert forbidden color
                 }
             }
