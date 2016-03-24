@@ -1,0 +1,21 @@
+# depslib dependency file v1.0
+1458822334 source:/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/main.cpp
+	<iostream>
+	<stdio.h>
+	<string.h>
+
+1458821635 source:/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/src/Algorithm.cpp
+	"Algorithm.h"
+
+1458821635 /home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/include/Algorithm.h
+
+1458821557 source:/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/src/InputFIle.cpp
+	"InputFIle.h"
+
+1458821557 /home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/include/InputFIle.h
+
+1458821579 source:/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/src/OutputFile.cpp
+	"OutputFile.h"
+
+1458821579 /home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/include/OutputFile.h
+
