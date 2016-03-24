@@ -6,10 +6,13 @@
 	"InputFIle.h"
 	"Algorithm.h"
 
-1458821635 source:/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/src/Algorithm.cpp
+1458846268 source:/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/src/Algorithm.cpp
 	"Algorithm.h"
 
-1458842863 /home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/include/Algorithm.h
+1458846162 /home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/include/Algorithm.h
+	<vector>
+	<set>
+	<algorithm>
 	"Structures.h"
 
 1458842575 source:/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/src/InputFIle.cpp
