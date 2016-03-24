@@ -14,7 +14,7 @@ int main(int argc, char ** argv)
     if ( argc > 1){ //if command line contain file's names
         inFilePath = string(argv[1]);
         outFilePath = string(argv[2]);
-    }else { //get file's name
+    } else { //get file's name
         char tmp[256];
         cout << "Sciezka do pliku wejsciowego: ";
         cin.getline(tmp, 256);
@@ -27,8 +27,8 @@ int main(int argc, char ** argv)
     cout << "To file: " << outFilePath << endl;
 
     InputFile inputFile;
-    inputFile.makeGraph(inFilePath);
-
+    Graph graph = inputFile.makeGraph(inFilePath);
+    inputFile.displayGraph(graph);
 
     cout << "Hello world!" << endl;
     return 0;

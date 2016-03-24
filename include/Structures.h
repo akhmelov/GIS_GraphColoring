@@ -3,8 +3,9 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
 
-typedef std::vector<std::vector<bool> > Graph;
+typedef std::map<int, std::map<int, bool> > Graph;
 
 
 

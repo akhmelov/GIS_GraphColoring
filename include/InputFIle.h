@@ -1,9 +1,10 @@
 #ifndef INPUTFILE_H
 #define INPUTFILE_H
 
-#include <sstream>
 #include <string>
 #include <fstream>
+#include <sstream>
+#include <map>
 
 #include "Structures.h"
 
@@ -14,6 +15,7 @@ class InputFile
 {
     public:
         Graph makeGraph(string path);
+        void displayGraph(Graph &graph);
 
         InputFile();
         virtual ~InputFile();
