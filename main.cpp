@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "InputFIle.h"
+#include "Algorithm.h"
 
 using namespace std;
 
@@ -29,6 +30,14 @@ int main(int argc, char ** argv)
     InputFile inputFile;
     Graph graph = inputFile.makeGraph(inFilePath);
     inputFile.displayGraph(graph);
+
+    Algorithm algorithm;
+    GraphColoring graphColoring = algorithm.algorithm(graph);
+
+    for(auto const& value: graphColoring) {
+        cout << value.first << " " << value.second << endl;
+    }
+
 
     cout << "Hello world!" << endl;
     return 0;

@@ -6,6 +6,7 @@
 #include <map>
 
 typedef std::map<int, std::map<int, bool> > Graph;
+typedef std::map<int, int> GraphColoring;
 
 
 
