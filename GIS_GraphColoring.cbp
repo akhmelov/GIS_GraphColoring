@@ -11,7 +11,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="test1 test2" />
+				<Option parameters="/home/wiktor/Pulpit/GIS_GraphColoring/inputFile.txt /home/wiktor/Pulpit/GIS_GraphColoring/outputFile.txt" />
 				<Compiler>
 					<Add option="-g" />
 					<Add directory="include" />
@@ -32,6 +32,7 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-std=c++11" />
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>

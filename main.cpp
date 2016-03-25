@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "InputFIle.h"
+#include "OutputFile.h"
 #include "Algorithm.h"
 
 using namespace std;
@@ -33,6 +34,8 @@ int main(int argc, char ** argv)
 
     Algorithm algorithm;
     GraphColoring graphColoring = algorithm.algorithm(graph);
+    OutputFile outputFile(graphColoring, outFilePath);
+    outputFile.generateOutput();
 
     for(auto const& value: graphColoring) {
         cout << value.first << " " << value.second << endl;
