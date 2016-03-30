@@ -74,7 +74,7 @@ GraphColoring Algorithm::algorithmFull(Graph &graph, GraphColoring &graphColorin
 
         /*cout << "Justice coloring false lastColor: " << lastPositionOfPresentColors
             << " max(" << maxPositionVertix << "): "<< mostUsedColor << "  min(" << minPositionVertix << "): "<< lessUsedColor << endl;*/
-        cout << "Justice coloring false change color for  " << "[" << maxPositionVertix << "] from " << mostUsedColor << " to " <<  graphColoring[maxPositionVertix] << endl;
+        cout << "Justice coloring false change color for vertix " << "" << maxPositionVertix << " from " << mostUsedColor << " to " <<  graphColoring[maxPositionVertix] << endl;
 
     }
     //end justice coloring
