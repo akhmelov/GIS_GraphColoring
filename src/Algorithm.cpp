@@ -33,7 +33,7 @@ GraphColoring Algorithm::algorithm(Graph &graph)
     }
     //end of the simple coloring algorithm
     for(auto const &ent: countColorUsing){
-        cout << "Simple algorithm color: " << ent.first << " = " << ent.second <<  endl;
+        cout << "Simple algorithm: color " << ent.first << " has " << ent.second << " vertix(ces)" <<  endl;
     }
     return algorithmFull(graph, graphColoring);
 }
@@ -79,7 +79,7 @@ GraphColoring Algorithm::algorithmFull(Graph &graph, GraphColoring &graphColorin
     }
     //end justice coloring
     for(auto const &ent: countColorUsing){
-        cout << "Full algorithm color: " << ent.first << " = " << ent.second <<  endl;
+        cout << "Full algorithm: color " << ent.first << " has " << ent.second << " vertix(ces)" <<  endl;
     }
     return graphColoring;
 }
