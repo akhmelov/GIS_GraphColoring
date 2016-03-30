@@ -1,18 +1,20 @@
 # depslib dependency file v1.0
-1458843158 source:/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/main.cpp
+1459335088 source:/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/main.cpp
 	<iostream>
 	<stdio.h>
 	<string.h>
 	"InputFIle.h"
+	"OutputFile.h"
 	"Algorithm.h"
 
-1458901039 source:/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/src/Algorithm.cpp
+1459343304 source:/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/src/Algorithm.cpp
 	"Algorithm.h"
 
-1458857659 /home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/include/Algorithm.h
+1459342209 /home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/include/Algorithm.h
 	<vector>
 	<set>
 	<algorithm>
+	<cmath>
 	"Structures.h"
 
 1458842575 source:/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/src/InputFIle.cpp
@@ -25,10 +27,14 @@
 	<map>
 	"Structures.h"
 
-1458821579 source:/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/src/OutputFile.cpp
+1459335088 source:/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/src/OutputFile.cpp
 	"OutputFile.h"
+	<algorithm>
+	<fstream>
 
-1458821579 /home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/include/OutputFile.h
+1459335088 /home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/include/OutputFile.h
+	"Structures.h"
+	<set>
 
 1458842813 /home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/include/Structures.h
 	<iostream>
@@ -36,5 +42,49 @@
 	<map>
 
 1458826404 source:/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/src/Structures.cpp
+	"Structures.h"
+
+1458942564 source:/home/wiktor/Pulpit/GIS_GraphColoring/main.cpp
+	<iostream>
+	<stdio.h>
+	<string.h>
+	"InputFIle.h"
+	"OutputFile.h"
+	"Algorithm.h"
+
+1458939773 /home/wiktor/Pulpit/GIS_GraphColoring/include/InputFIle.h
+	<string>
+	<fstream>
+	<sstream>
+	<map>
+	"Structures.h"
+
+1458939773 /home/wiktor/Pulpit/GIS_GraphColoring/include/Structures.h
+	<iostream>
+	<vector>
+	<map>
+
+1458939773 /home/wiktor/Pulpit/GIS_GraphColoring/include/Algorithm.h
+	<vector>
+	<set>
+	<algorithm>
+	"Structures.h"
+
+1458939773 source:/home/wiktor/Pulpit/GIS_GraphColoring/src/Algorithm.cpp
+	"Algorithm.h"
+
+1458939773 source:/home/wiktor/Pulpit/GIS_GraphColoring/src/InputFIle.cpp
+	"InputFIle.h"
+
+1458943156 source:/home/wiktor/Pulpit/GIS_GraphColoring/src/OutputFile.cpp
+	"OutputFile.h"
+	<algorithm>
+	<fstream>
+
+1458942413 /home/wiktor/Pulpit/GIS_GraphColoring/include/OutputFile.h
+	"Structures.h"
+	<set>
+
+1458939773 source:/home/wiktor/Pulpit/GIS_GraphColoring/src/Structures.cpp
 	"Structures.h"
 

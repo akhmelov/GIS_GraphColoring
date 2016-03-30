@@ -4,6 +4,7 @@
 #include <vector>
 #include <set>
 #include <algorithm>
+#include <cmath>        // std::abs
 
 #include "Structures.h"
 
@@ -19,8 +20,12 @@ class Algorithm
     protected:
     private:
         set<int> colors;
+        map<int, int> countColorUsing; //map<color, count> count - how many times it's used
 
-        int getColor(int);
+        GraphColoring algorithmFull(Graph &, GraphColoring &);
+        int getColor(int a = 0,bool isGetTotalNewColor = false);
+        int getMaxMinUsedColor(bool isMax = true);
+        bool isJusticeColoring(); //check if different beetwing using of colors is 1
         bool isColorAllowed(int newColor, set<int> &colorUsed);
 
 };
