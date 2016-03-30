@@ -11,7 +11,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="test1 test2" />
+				<Option parameters="inputFile.txt outputFile.txt" />
 				<Compiler>
 					<Add option="-g" />
 					<Add directory="include" />

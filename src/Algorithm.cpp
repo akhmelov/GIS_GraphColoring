@@ -13,6 +13,8 @@ Algorithm::~Algorithm()
 GraphColoring Algorithm::algorithm(Graph &graph)
 {
     GraphColoring graphColoring;
+    map<int, int> countColorUsing; //map<color, count> count - how many times it's used
+    //start simple coloring algorithm
     for(auto const &ent1 : graph) {
         set<int> colorUsed; //which colors already checked and not suitable
         graphColoring[ent1.first] = getColor(0);
@@ -28,7 +30,15 @@ GraphColoring Algorithm::algorithm(Graph &graph)
                 }
             }
         }
+        countColorUsing[graphColoring[ent1.first]]++;
     }
+    //end of the simple coloring algorithm
+    //start justice coloring
+
+    for(auto const &ent: countColorUsing){
+        cout << "color: " << ent.first << " = " << ent.second <<  endl;
+    }
+    //end justice coloring
     return graphColoring;
 }
 
