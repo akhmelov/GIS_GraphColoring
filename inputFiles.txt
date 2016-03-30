@@ -1,0 +1,4 @@
+inputFile1: 
+inputFile2 second: https://en.wikipedia.org/wiki/Greedy_coloring
+inputFile3 page 40: http://www.dm.uba.ar/materias/investigacion_operativa/2010/2/curso_elavio07_vfinal.pdf
+inputFile4 page 112:  http://www.dm.uba.ar/materias/investigacion_operativa/2010/2/curso_elavio07_vfinal.pdf
