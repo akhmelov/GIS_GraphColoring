@@ -20,6 +20,7 @@ GraphColoring Algorithm::algorithm(Graph &graph)
         colorUsed.insert(graphColoring[ent1.first]); //insert forbidden color
         for(auto const &ent2 : ent1.second) {
             if(ent2.second){    //it's ent1's neighbour
+                colorUsed.insert(graphColoring[ent2.first]); //the color of the neighbour is forbidden
                 while(graphColoring[ent2.first] == graphColoring[ent1.first]){  //is neighbour has the same color?
                     int newColor = getColor(graphColoring[ent1.first]);
                     while(!isColorAllowed(newColor, colorUsed))
@@ -60,6 +61,7 @@ GraphColoring Algorithm::algorithmFull(Graph &graph, GraphColoring &graphColorin
         graphColoring[maxPositionVertix] = lessUsedColor; //gave new color
         colorUsed.insert(lessUsedColor); //set new color as forbidden color
         for(auto const &ent2 : graph[maxPositionVertix]) {
+            colorUsed.insert(graphColoring[ent2.first]); //the color of the neighbour is forbidden
             if(ent2.second){    //it's ent1's neighbour
                 while(graphColoring[ent2.first] == graphColoring[maxPositionVertix]){  //is neighbour has the same color?
                     int newColor = getColor(lastPositionOfPresentColors);
