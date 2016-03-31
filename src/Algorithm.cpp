@@ -135,9 +135,14 @@ int Algorithm::getMaxMinUsedColor(bool isMax)
 bool Algorithm::isJusticeColoring()
 {
     int firstColor = countColorUsing.begin()->second;
+    int maxColorCount = countColorUsing.begin()->second;
+    int minColorCount = countColorUsing.begin()->second;
     for(auto const &ent: countColorUsing){
-        if(abs(firstColor - ent.second) > 1)
-            return false;
+        if(maxColorCount < ent.second) maxColorCount = ent.second;
+        if(minColorCount > ent.second) minColorCount = ent.second;
+        if(maxColorCount - minColorCount > 1) return false;
+        //if(abs(firstColor - ent.second) > 1)
+            //return false;
     }
     return true;
 }
