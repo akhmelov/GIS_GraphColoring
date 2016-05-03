@@ -5,10 +5,9 @@
 
 using namespace std;
 
-OutputFile::OutputFile(GraphColoring& graphColoring, string& outFilePath) : graphColoring_(graphColoring), outFilePath_(outFilePath){}
-
-void OutputFile::computeStatistics()
+std::vector< std::pair<int, unsigned int> > OutputFile::computeStatistics(GraphColoring& graphColoring_)
 {
+    std::vector< std::pair<int, unsigned int> > coloursHistogram_;
     for(GraphColoring::iterator it = graphColoring_.begin(); it != graphColoring_.end(); ++it)
     {
         int actualColour = it->second;
@@ -23,35 +22,59 @@ void OutputFile::computeStatistics()
             findIt->second += 1U;
         }
     }
-    return;
+    return coloursHistogram_;
 }
 
-void OutputFile::generateOutput()
-{
-    computeStatistics();
-    ofstream ofile(outFilePath_.c_str());
-    ofile << "Liczba kolorów:  " << coloursHistogram_.size() << endl << endl;
-    ofile << "kolor:  liczba wierzchołków" << endl;
-    for(vector< pair<int, unsigned int> >::iterator it = coloursHistogram_.begin(); it != coloursHistogram_.end(); ++it)
-    {
-        ofile << it->first << ":  " << it->second << endl;
-    }
-    ofile << endl << "wierzchołek:  kolor" << endl;
-    for(GraphColoring::iterator it = graphColoring_.begin(); it != graphColoring_.end(); ++it)
-    {
-        ofile << it->first << ":  " << it->second << endl;
-    }
-    ofile.close();
-}
-
-OutputInf OutputFile::generateFinalOutputStr()
+OutputInf OutputFile::generateFinalOutput(GraphColoring& graphColoring_)
 {
     OutputInf outInf;
-    computeStatistics();
+    std::vector< std::pair<int, unsigned int> > coloursHistogram_ = computeStatistics(graphColoring_);
     outInf.numberOfColors = coloursHistogram_.size();
     for(vector< pair<int, unsigned int> >::iterator it = coloursHistogram_.begin(); it != coloursHistogram_.end(); ++it)
     {
         outInf.countColorUsing[it->first] = it->second;
     }
     return outInf;
+}
+
+std::string OutputFile::getOutput(GraphColoring &graphColoringSeq, GraphColoring &graphColoringInd)
+{
+    std::stringstream ss;
+    OutputInf resultSequence = generateFinalOutput(graphColoringSeq);
+    OutputInf resultIndependent = generateFinalOutput(graphColoringInd);
+    ss << endl;
+    ss << myFill() << "Sequence" << myFill() << "|" << myFill() << "Independent" << myFill() << endl;
+    ss << myFill() << "        " << myFill() << "|" << myFill() << "           " << myFill() << endl;
+    ss << myFill() << "" << myFill(9) << "Liczba kolorow uzytych" << myFill(9) << "" << myFill() << endl;
+    ss << myFill() << resultSequence.numberOfColors << myFill(17) << "|" << myFill() << resultIndependent.numberOfColors << myFill() << endl;
+    ss << myFill() << "" << myFill(9) << "kolor:  liczba wierzchołków" << myFill(9) << "" << myFill() << endl;
+    for(map<int, int>::iterator it1 = resultSequence.countColorUsing.begin(), it2 = resultIndependent.countColorUsing.begin();
+        it1 != resultSequence.countColorUsing.end() || it2 != resultIndependent.countColorUsing.end();) {
+        if(it1 != resultSequence.countColorUsing.end())
+            { ss << myFill() << it1 -> first << ": " << it1 -> second << myFill(14); it1++; }
+        else
+            ss << myFill() << "        " << myFill();
+        ss << "|";
+        if(it2 != resultIndependent.countColorUsing.end())
+            { ss << myFill() << it2 -> first << ": " << it2 -> second << myFill(14); it2++; }
+        else
+            ss << myFill() << "        " << myFill();
+        ss << endl;
+    }
+
+    ss << myFill() << "" << myFill(9) << "wierzchołek:  kolor" << myFill(9) << "" << myFill() << endl;
+    for(map<int, int>::iterator it1 = graphColoringSeq.begin(), it2 = graphColoringInd.begin();
+        it1 != graphColoringSeq.end() || it2 != graphColoringInd.end();) {
+        if(it1 != graphColoringSeq.end())
+            { ss << myFill() << it1 -> first << ": " << it1 -> second << myFill(14); it1++; }
+        else
+            ss << myFill() << "        " << myFill();
+        ss << "|";
+        if(it2 != graphColoringInd.end())
+            { ss << myFill() << it2 -> first << ": " << it2 -> second << myFill(14); it2++; }
+        else
+            ss << myFill() << "        " << myFill();
+        ss << endl;
+    }
+    return ss.str();
 }

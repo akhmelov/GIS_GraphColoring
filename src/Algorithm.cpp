@@ -36,7 +36,7 @@ GraphColoring Algorithm::algorithmSequence(const Graph &graph)
     }
     //end of the simple coloring algorithm
     for(auto const &ent: countColorUsing){
-        cout << "Sequence algorithm: color " << ent.first << " has " << ent.second << " vertix(ces)" <<  endl;
+        //cout << "Sequence algorithm: color " << ent.first << " has " << ent.second << " vertix(ces)" <<  endl;
     }
     return algorithmFull(graph, graphColoring, countColorUsing, colors);
 }
@@ -66,7 +66,7 @@ GraphColoring Algorithm::algorithmIndependent(const Graph &graph)
 
     //end of the simple coloring algorithm
     for(auto const &ent: countColorUsing){
-        cout << "Independent algorithm: color " << ent.first << " has " << ent.second << " vertix(ces)" <<  endl;
+        //cout << "Independent algorithm: color " << ent.first << " has " << ent.second << " vertix(ces)" <<  endl;
     }
     return algorithmFull(graph, graphColoring, countColorUsing, colors);
 }
@@ -108,12 +108,12 @@ GraphColoring Algorithm::algorithmFull(const Graph &graph, GraphColoring &graphC
 
         /*cout << "Justice coloring false lastColor: " << lastPositionOfPresentColors
             << " max(" << maxPositionVertix << "): "<< mostUsedColor << "  min(" << minPositionVertix << "): "<< lessUsedColor << endl;*/
-        cout << "Justice color checking false change color for vertix " << "" << maxPositionVertix << " from " << mostUsedColor << " to " <<  graphColoring[maxPositionVertix] << endl;
+        //cout << "Justice color checking false change color for vertix " << "" << maxPositionVertix << " from " << mostUsedColor << " to " <<  graphColoring[maxPositionVertix] << endl;
 
     }
     //end justice coloring
     for(auto const &ent: countColorUsing){
-        cout << "Full algorithm: color " << ent.first << " has " << ent.second << " vertix(ces)" <<  endl;
+        //cout << "Full algorithm: color " << ent.first << " has " << ent.second << " vertix(ces)" <<  endl;
     }
     return graphColoring;
 }

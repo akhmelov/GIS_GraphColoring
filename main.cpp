@@ -42,39 +42,8 @@ int main(int argc, char ** argv)
     Algorithm algorithm;
     GraphColoring graphColoringSeq = algorithm.algorithmSequence(graph);
     GraphColoring graphColoringInd = algorithm.algorithmIndependent(graph);
-    OutputInf resultSequence = OutputFile(graphColoringSeq, outFilePath).generateFinalOutputStr();
-    OutputInf resultIndependent = OutputFile(graphColoringInd, outFilePath).generateFinalOutputStr();
 
-    cout << endl;
-    cout << myFill() << "Sequence" << myFill() << "|" << myFill() << "Independent" << myFill() << endl;
-    cout << myFill() << "        " << myFill() << "|" << myFill() << "           " << myFill() << endl;
-    cout << myFill() << "" << myFill(9) << "Liczba kolorow uzytych" << myFill(9) << "" << myFill() << endl;
-    cout << myFill() << resultSequence.numberOfColors << myFill(17) << "|" << myFill() << resultIndependent.numberOfColors << myFill() << endl;
-    cout << myFill() << "" << myFill(9) << "kolor:  liczba wierzchołków" << myFill(9) << "" << myFill() << endl;
-    for(map<int, int>::iterator it1 = resultSequence.countColorUsing.begin(), it2 = resultIndependent.countColorUsing.begin();
-        it1 != resultSequence.countColorUsing.end() || it2 != resultIndependent.countColorUsing.end();) {
-        if(it1 != resultSequence.countColorUsing.end())
-            { cout << myFill() << it1 -> first << ": " << it1 -> second << myFill(14); it1++; }
-        else
-            cout << myFill() << "        " << myFill();
-        cout << "|";
-        if(it2 != resultIndependent.countColorUsing.end())
-            { cout << myFill() << it2 -> first << ": " << it2 -> second << myFill(14); it2++; }
-        else
-            cout << myFill() << "        " << myFill();
-        cout << endl;
-    }
-
-    OutputFile outputFile(graphColoringInd, outFilePath);
-    outputFile.generateOutput();
-
-    for(auto const& value: graphColoringSeq) {
-        cout << value.first << " " << value.second << endl;
-    }
-
-
-    cout << "Hello world!" << endl;
-
+    cout << OutputFile().getOutput(graphColoringSeq, graphColoringInd) << endl;
 
     if(true){ //for all files in one folder
         //char pathToDirectory[256] = ;
@@ -92,36 +61,20 @@ int main(int argc, char ** argv)
             string fileName(ent->d_name);
             if (fileName == ".." || fileName == "." || fileName == "inputFiles.txt") continue; //special files in linux or mine
 
-            outputFile << pathToDirectory << fileName << endl;    cout << pathToDirectory << fileName << endl;
-            Graph graph = inputFile.makeGraph(pathToDirectory + ent->d_name);
+            outputFile << pathToDirectory << fileName << endl;
+            Graph graph = inputFile.makeGraph(pathToDirectory + ent -> d_name);
 
-            string outFilePath = string(pathToOutputDirectory + "log_" + fileName);
             Algorithm algorithm;
             GraphColoring graphColoringSeq = algorithm.algorithmSequence(graph);
             GraphColoring graphColoringInd = algorithm.algorithmIndependent(graph);
-            OutputInf resultSequence = OutputFile(graphColoringSeq, outFilePath).generateFinalOutputStr();
-            OutputInf resultIndependent = OutputFile(graphColoringInd, outFilePath).generateFinalOutputStr();
 
-            outputFile << endl;
-            outputFile << myFill() << "Sequence" << myFill() << "|" << myFill() << "Independent" << myFill() << endl;
-            outputFile << myFill() << "        " << myFill() << "|" << myFill() << "           " << myFill() << endl;
-            outputFile << myFill() << "" << myFill(9) << "Liczba kolorow uzytych" << myFill(9) << "" << myFill() << endl;
-            outputFile << myFill() << resultSequence.numberOfColors << myFill(17) << "|" << myFill() << resultIndependent.numberOfColors << myFill() << endl;
-            outputFile << myFill() << "" << myFill(9) << "kolor:  liczba wierzchołków" << myFill(9) << "" << myFill() << endl;
-            for(map<int, int>::iterator it1 = resultSequence.countColorUsing.begin(), it2 = resultIndependent.countColorUsing.begin();
-                it1 != resultSequence.countColorUsing.end() || it2 != resultIndependent.countColorUsing.end();) {
-                if(it1 != resultSequence.countColorUsing.end())
-                    { outputFile << myFill() << it1 -> first << ": " << it1 -> second << myFill(14); it1++; }
-                else
-                    outputFile << myFill() << "        " << myFill();
-                outputFile << "|";
-                if(it2 != resultIndependent.countColorUsing.end())
-                    { outputFile << myFill() << it2 -> first << ": " << it2 -> second << myFill(14); it2++; }
-                else
-                    outputFile << myFill() << "        " << myFill();
-                outputFile << endl;
-            }
+            string result = OutputFile().getOutput(graphColoringSeq, graphColoringInd);
+            outputFile << result << endl;
 
+            ofstream outputFileLog;
+            outputFileLog.open((pathToOutputDirectory + "log_" + fileName).c_str(), ofstream::in);
+            outputFileLog << result;
+            outputFileLog.close();
           }
           closedir (dir);
         } else {
@@ -131,6 +84,10 @@ int main(int argc, char ** argv)
         }
         outputFile.close();
     }
+
+    char a;
+    cout << "Press any symbol -> enter to exit" << endl;
+    cin >> a;
 
     return 0;
 }

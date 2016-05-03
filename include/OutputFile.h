@@ -10,16 +10,18 @@
 class OutputFile
 {
     public:
-        OutputFile(GraphColoring& graphColoring, std::string& outFilePath);
-        void generateOutput();
-        OutputInf generateFinalOutputStr();
+        std::string getOutput(GraphColoring &graphColoringSeq, GraphColoring &graphColoringInd);
+        void writeOutputToFile();
 
     private:
-        GraphColoring& graphColoring_;
-        std::string& outFilePath_;
-        std::vector< std::pair<int, unsigned int> > coloursHistogram_;
+        //GraphColoring& graphColoring_;
+        //std::string& outFilePath_;
+        //std::vector< std::pair<int, unsigned int> > coloursHistogram_;
 
-        void computeStatistics();
+        std::vector< std::pair<int, unsigned int> > computeStatistics(GraphColoring& graphColoring_);
+        OutputInf generateFinalOutput(GraphColoring& graphColoring_);
+
+        std::string myFill(int n = 10) { return std::string(n, ' ');}
 };
 
 #endif // OUTPUTFILE_H
