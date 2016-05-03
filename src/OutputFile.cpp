@@ -44,15 +44,14 @@ void OutputFile::generateOutput()
     ofile.close();
 }
 
-string OutputFile::generateFinalOutputStr()
+OutputInf OutputFile::generateFinalOutputStr()
 {
-    stringstream ss;
+    OutputInf outInf;
     computeStatistics();
-    ss << "     Liczba kolorów:  " << coloursHistogram_.size() << endl;
-    ss << "     kolor:  liczba wierzchołków" << endl;
+    outInf.numberOfColors = coloursHistogram_.size();
     for(vector< pair<int, unsigned int> >::iterator it = coloursHistogram_.begin(); it != coloursHistogram_.end(); ++it)
     {
-        ss << "     " << it->first << ":  " << it->second << endl;
+        outInf.countColorUsing[it->first] = it->second;
     }
-    return ss.str();
+    return outInf;
 }

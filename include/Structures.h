@@ -8,6 +8,10 @@
 typedef std::map<int, std::map<int, bool> > Graph;
 typedef std::map<int, int> GraphColoring;
 
+struct OutputInf {
+    int numberOfColors = 0;
+    std::map<int, int> countColorUsing;
+};
 
 
 class Structures

@@ -12,7 +12,7 @@ class OutputFile
     public:
         OutputFile(GraphColoring& graphColoring, std::string& outFilePath);
         void generateOutput();
-        std::string generateFinalOutputStr();
+        OutputInf generateFinalOutputStr();
 
     private:
         GraphColoring& graphColoring_;

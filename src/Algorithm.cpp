@@ -10,7 +10,7 @@ Algorithm::~Algorithm()
     //dtor
 }
 
-GraphColoring Algorithm::algorithm1(const Graph &graph)
+GraphColoring Algorithm::algorithmSequence(const Graph &graph)
 {
     GraphColoring graphColoring;
     set<int> colors;
@@ -36,38 +36,37 @@ GraphColoring Algorithm::algorithm1(const Graph &graph)
     }
     //end of the simple coloring algorithm
     for(auto const &ent: countColorUsing){
-        cout << "Simple algorithm: color " << ent.first << " has " << ent.second << " vertix(ces)" <<  endl;
+        cout << "Sequence algorithm: color " << ent.first << " has " << ent.second << " vertix(ces)" <<  endl;
     }
     return algorithmFull(graph, graphColoring, countColorUsing, colors);
 }
 
-GraphColoring Algorithm::algorithm2(const Graph &graph)
+GraphColoring Algorithm::algorithmIndependent(const Graph &graph)
 {   ///TODO independent set
     GraphColoring graphColoring;
     set<int> colors;
     map<int, int> countColorUsing;
-    //start simple coloring algorithm
-    for(auto const &ent1 : graph) {
-        set<int> colorUsed; //which colors already checked and not suitable
-        graphColoring[ent1.first] = getColor(colors, 0);
-        colorUsed.insert(graphColoring[ent1.first]); //insert forbidden color
-        for(auto const &ent2 : ent1.second) {
-            if(ent2.second){    //it's ent1's neighbour
-                colorUsed.insert(graphColoring[ent2.first]); //the color of the neighbour is forbidden
-                while(graphColoring[ent2.first] == graphColoring[ent1.first]){  //is neighbour has the same color?
-                    int newColor = getColor(colors, graphColoring[ent1.first]);
-                    while(!isColorAllowed(newColor, colorUsed))
-                        newColor = getColor(colors, newColor);
-                    graphColoring[ent1.first] = newColor;
-                    colorUsed.insert(graphColoring[ent1.first]); //insert forbidden color
-                }
-            }
+
+    Graph graph_ = graph;
+    int newColor = getColor(colors, 0);
+
+    Graph tmpGraph = graph_;
+    while(graph_.size() != 0){  //graph without visited vertexes
+        tmpGraph = graph_; //graph without visited vertexes, but with neighbours
+        while(tmpGraph.size() != 0){    //graph without visited vertexes' neighbours
+            int vertex = vertexMinDegree(tmpGraph); //get vertex with minimum degree
+            if(vertex == -1) break;
+            countColorUsing[newColor]++;  graphColoring[vertex] = newColor; //set color
+            removeNeighbours(vertex, tmpGraph);
+            graph_.erase(vertex); //remove visited vertex
+            tmpGraph.erase(vertex); //remove visited vertex
         }
-        countColorUsing[graphColoring[ent1.first]]++;
+        newColor = getColor(colors, newColor); //get next color
     }
+
     //end of the simple coloring algorithm
     for(auto const &ent: countColorUsing){
-        cout << "Simple algorithm: color " << ent.first << " has " << ent.second << " vertix(ces)" <<  endl;
+        cout << "Independent algorithm: color " << ent.first << " has " << ent.second << " vertix(ces)" <<  endl;
     }
     return algorithmFull(graph, graphColoring, countColorUsing, colors);
 }
@@ -119,9 +118,33 @@ GraphColoring Algorithm::algorithmFull(const Graph &graph, GraphColoring &graphC
     return graphColoring;
 }
 
+void Algorithm::removeNeighbours(int vertex, Graph &graph)
+{
+    for(auto &ent2 : graph[vertex]) {
+        if(ent2.second){    //it's ent1's neighbour
+            //ent2.second = false;  ((graph[ent2.first].find(vertex)) -> second) = false; //set connection to false, the graph is symethric
+            graph.erase(ent2.first);
+        }
+    }
+}
+
+int Algorithm::vertexMinDegree(const Graph &graph)
+{
+    pair<int, int> vertex(-1, INT_MAX); //<vertex, degree>
+    for(auto const &ent1 : graph) {
+        int tmpDegree = getDegreeOfVertex(ent1.first, graph);
+        if(tmpDegree < vertex.second) vertex = make_pair(ent1.first, ent1.second.size());
+    }
+    return vertex.first;
+}
+
 int Algorithm::getDegreeOfVertex(int vertex, const Graph &graph)
 {
-    return ((graph.find(vertex)) -> second).size();
+    int count = 0;
+    for(auto const &ent2 : (graph.find(vertex)) -> second) {
+        if(ent2.second) count++;
+    }
+    return count;
 }
 
 int Algorithm::getColor(set<int> &colors, int presentColor, bool isGetTotalNewColor)

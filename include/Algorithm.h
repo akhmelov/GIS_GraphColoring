@@ -5,6 +5,7 @@
 #include <set>
 #include <algorithm>
 #include <cmath>        // std::abs
+#include <climits>
 
 #include "Structures.h"
 
@@ -13,16 +14,16 @@ using namespace std;
 class Algorithm
 {
     public:
-        GraphColoring algorithm1(const Graph &graph);
-        GraphColoring algorithm2(const Graph &graph);
+        GraphColoring algorithmSequence(const Graph &graph);
+        GraphColoring algorithmIndependent(const Graph &graph);
 
         Algorithm();
         virtual ~Algorithm();
     protected:
     private:
-        //set<int> colors;
-
         GraphColoring algorithmFull(const Graph &, GraphColoring &, map<int, int> &countColorUsing, set<int> &colors);
+        void removeNeighbours(int vertex, Graph &); //remove all neighbours "vertex" from Graph
+        int vertexMinDegree(const Graph &graph); //get vertex with minimum degree
         int getDegreeOfVertex(int vertex, const Graph &);
         int getColor(set<int> &colors, int a = 0,bool isGetTotalNewColor = false);
         int getMaxMinUsedColor(map<int, int> &countColorUsing, bool isMax = true);
