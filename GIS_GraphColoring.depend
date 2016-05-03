@@ -8,10 +8,10 @@
 	"OutputFile.h"
 	"Algorithm.h"
 
-1462275754 source:/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/src/Algorithm.cpp
+1462278254 source:/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/src/Algorithm.cpp
 	"Algorithm.h"
 
-1462277551 /home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/include/Algorithm.h
+1462278184 /home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/include/Algorithm.h
 	<vector>
 	<set>
 	<algorithm>

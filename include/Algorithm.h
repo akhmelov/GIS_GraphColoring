@@ -20,14 +20,13 @@ class Algorithm
         virtual ~Algorithm();
     protected:
     private:
-        set<int> colors;
-        map<int, int> countColorUsing; //map<color, count> count - how many times it's used
+        //set<int> colors;
 
-        GraphColoring algorithmFull(const Graph &, GraphColoring &);
+        GraphColoring algorithmFull(const Graph &, GraphColoring &, map<int, int> &countColorUsing, set<int> &colors);
         int getDegreeOfVertex(int vertex, const Graph &);
-        int getColor(int a = 0,bool isGetTotalNewColor = false);
-        int getMaxMinUsedColor(bool isMax = true);
-        bool isJusticeColoring(); //check if different beetwing using of colors is 1
+        int getColor(set<int> &colors, int a = 0,bool isGetTotalNewColor = false);
+        int getMaxMinUsedColor(map<int, int> &countColorUsing, bool isMax = true);
+        bool isJusticeColoring(map<int, int> &countColorUsing); //check if different beetwing using of colors is 1
         bool isColorAllowed(int newColor, set<int> &colorUsed);
 
 };

@@ -13,18 +13,20 @@ Algorithm::~Algorithm()
 GraphColoring Algorithm::algorithm1(const Graph &graph)
 {
     GraphColoring graphColoring;
+    set<int> colors;
+    map<int, int> countColorUsing;
     //start simple coloring algorithm
     for(auto const &ent1 : graph) {
         set<int> colorUsed; //which colors already checked and not suitable
-        graphColoring[ent1.first] = getColor(0);
+        graphColoring[ent1.first] = getColor(colors, 0);
         colorUsed.insert(graphColoring[ent1.first]); //insert forbidden color
         for(auto const &ent2 : ent1.second) {
             if(ent2.second){    //it's ent1's neighbour
                 colorUsed.insert(graphColoring[ent2.first]); //the color of the neighbour is forbidden
                 while(graphColoring[ent2.first] == graphColoring[ent1.first]){  //is neighbour has the same color?
-                    int newColor = getColor(graphColoring[ent1.first]);
+                    int newColor = getColor(colors, graphColoring[ent1.first]);
                     while(!isColorAllowed(newColor, colorUsed))
-                        newColor = getColor(newColor);
+                        newColor = getColor(colors, newColor);
                     graphColoring[ent1.first] = newColor;
                     colorUsed.insert(graphColoring[ent1.first]); //insert forbidden color
                 }
@@ -36,24 +38,26 @@ GraphColoring Algorithm::algorithm1(const Graph &graph)
     for(auto const &ent: countColorUsing){
         cout << "Simple algorithm: color " << ent.first << " has " << ent.second << " vertix(ces)" <<  endl;
     }
-    return algorithmFull(graph, graphColoring);
+    return algorithmFull(graph, graphColoring, countColorUsing, colors);
 }
 
 GraphColoring Algorithm::algorithm2(const Graph &graph)
 {   ///TODO independent set
     GraphColoring graphColoring;
+    set<int> colors;
+    map<int, int> countColorUsing;
     //start simple coloring algorithm
     for(auto const &ent1 : graph) {
         set<int> colorUsed; //which colors already checked and not suitable
-        graphColoring[ent1.first] = getColor(0);
+        graphColoring[ent1.first] = getColor(colors, 0);
         colorUsed.insert(graphColoring[ent1.first]); //insert forbidden color
         for(auto const &ent2 : ent1.second) {
             if(ent2.second){    //it's ent1's neighbour
                 colorUsed.insert(graphColoring[ent2.first]); //the color of the neighbour is forbidden
                 while(graphColoring[ent2.first] == graphColoring[ent1.first]){  //is neighbour has the same color?
-                    int newColor = getColor(graphColoring[ent1.first]);
+                    int newColor = getColor(colors, graphColoring[ent1.first]);
                     while(!isColorAllowed(newColor, colorUsed))
-                        newColor = getColor(newColor);
+                        newColor = getColor(colors, newColor);
                     graphColoring[ent1.first] = newColor;
                     colorUsed.insert(graphColoring[ent1.first]); //insert forbidden color
                 }
@@ -65,16 +69,16 @@ GraphColoring Algorithm::algorithm2(const Graph &graph)
     for(auto const &ent: countColorUsing){
         cout << "Simple algorithm: color " << ent.first << " has " << ent.second << " vertix(ces)" <<  endl;
     }
-    return algorithmFull(graph, graphColoring);
+    return algorithmFull(graph, graphColoring, countColorUsing, colors);
 }
 
-GraphColoring Algorithm::algorithmFull(const Graph &graph, GraphColoring &graphColoring)
+GraphColoring Algorithm::algorithmFull(const Graph &graph, GraphColoring &graphColoring, map<int, int> &countColorUsing, set<int> &colors)
 {
     //start justice coloring
     int lastPositionOfPresentColors = *(colors.rbegin()); //new colors will be gave from this position
-    while(!isJusticeColoring()){
-        int mostUsedColor = getMaxMinUsedColor();
-        int lessUsedColor = getMaxMinUsedColor(false);
+    while(!isJusticeColoring(countColorUsing)){
+        int mostUsedColor = getMaxMinUsedColor(countColorUsing);
+        int lessUsedColor = getMaxMinUsedColor(countColorUsing, false);
 
         int minPositionVertix = -1;
         int maxPositionVertix = -1;
@@ -93,9 +97,9 @@ GraphColoring Algorithm::algorithmFull(const Graph &graph, GraphColoring &graphC
             colorUsed.insert(graphColoring[ent2.first]); //the color of the neighbour is forbidden
             if(ent2.second){    //it's ent1's neighbour
                 while(graphColoring[ent2.first] == graphColoring[maxPositionVertix]){  //is neighbour has the same color?
-                    int newColor = getColor(lastPositionOfPresentColors);
+                    int newColor = getColor(colors, lastPositionOfPresentColors);
                     while(!isColorAllowed(newColor, colorUsed))
-                        newColor = getColor(newColor);
+                        newColor = getColor(colors, newColor);
                     graphColoring[maxPositionVertix] = newColor;
                     colorUsed.insert(graphColoring[maxPositionVertix]); //insert forbidden color
                 }
@@ -120,7 +124,7 @@ int Algorithm::getDegreeOfVertex(int vertex, const Graph &graph)
     return ((graph.find(vertex)) -> second).size();
 }
 
-int Algorithm::getColor(int presentColor, bool isGetTotalNewColor)
+int Algorithm::getColor(set<int> &colors, int presentColor, bool isGetTotalNewColor)
 {
     while(isGetTotalNewColor){
         set<int>::iterator it = find(colors.begin(), colors.end(), presentColor);
@@ -153,7 +157,7 @@ bool Algorithm::isColorAllowed(int newColor, set<int> &colorUsed)
     return colorUsed.end() == it;
 }
 
-int Algorithm::getMaxMinUsedColor(bool isMax)
+int Algorithm::getMaxMinUsedColor(map<int, int> &countColorUsing, bool isMax)
 {
     int maxMin = countColorUsing.begin()->first;
     for(auto const &ent: countColorUsing){
@@ -166,7 +170,7 @@ int Algorithm::getMaxMinUsedColor(bool isMax)
     return maxMin;
 }
 
-bool Algorithm::isJusticeColoring()
+bool Algorithm::isJusticeColoring(map<int, int> &countColorUsing)
 {
     int maxColorCount = countColorUsing.begin()->second;
     int minColorCount = countColorUsing.begin()->second;
