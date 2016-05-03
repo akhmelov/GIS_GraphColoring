@@ -15,7 +15,7 @@ class InputFile
 {
     public:
         Graph makeGraph(string path);
-        void displayGraph(Graph &graph);
+        string displayGraph(Graph &graph);
 
         InputFile();
         virtual ~InputFile();

@@ -1,14 +1,18 @@
 #ifndef OUTPUTFILE_H
 #define OUTPUTFILE_H
 
-#include "Structures.h"
+#include <string>
 #include <set>
+#include <sstream>
+
+#include "Structures.h"
 
 class OutputFile
 {
     public:
         OutputFile(GraphColoring& graphColoring, std::string& outFilePath);
         void generateOutput();
+        std::string generateFinalOutputStr();
 
     private:
         GraphColoring& graphColoring_;

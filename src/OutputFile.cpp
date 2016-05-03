@@ -43,3 +43,16 @@ void OutputFile::generateOutput()
     }
     ofile.close();
 }
+
+string OutputFile::generateFinalOutputStr()
+{
+    stringstream ss;
+    computeStatistics();
+    ss << "     Liczba kolorów:  " << coloursHistogram_.size() << endl;
+    ss << "     kolor:  liczba wierzchołków" << endl;
+    for(vector< pair<int, unsigned int> >::iterator it = coloursHistogram_.begin(); it != coloursHistogram_.end(); ++it)
+    {
+        ss << "     " << it->first << ":  " << it->second << endl;
+    }
+    return ss.str();
+}

@@ -29,26 +29,28 @@ Graph InputFile::makeGraph(string path)
     return graph;
 }
 
-void InputFile::displayGraph(Graph &graph)
+string InputFile::displayGraph(Graph &graph)
 {
+    stringstream ss;
     vector<int> tmp;
-    cout << "  |";
+    ss << "  |";
     for(auto const &ent1 : graph) {
-        cout << " " << ent1.first;
+        ss << " " << ent1.first;
         tmp.push_back(ent1.first);
     }
-    cout << endl;
-    cout << "--+";
+    ss << endl;
+    ss << "--+";
     for(auto const &ent1 : graph) {
-        cout << "--";
+        ss << "--";
     }
-    cout << endl;
+    ss << endl;
     for(auto const &ent1 : graph) {
-        cout << ent1.first << " |";
+        ss << ent1.first << " |";
         for(vector<int>::iterator it = tmp.begin(); it != tmp.end(); ++it) {
-            if(ent1.second.find(*it) != ent1.second.end()) cout << " +"; else cout << " -";
+            if(ent1.second.find(*it) != ent1.second.end()) ss << " +"; else ss << " -";
         }
-        cout << endl;
+        ss << endl;
     }
-    cout << endl;
+    ss << endl;
+    return ss.str();
 }

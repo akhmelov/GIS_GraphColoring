@@ -1,0 +1,40 @@
+/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/test/inputFile.txt
+     Liczba kolorów:  4
+     kolor:  liczba wierzchołków
+     4:  2
+     2:  2
+     3:  2
+     1:  3
+
+/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/test/inputFile3.txt
+     Liczba kolorów:  4
+     kolor:  liczba wierzchołków
+     3:  3
+     2:  3
+     4:  2
+     1:  3
+
+/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/test/inputFile4.txt
+     Liczba kolorów:  5
+     kolor:  liczba wierzchołków
+     5:  2
+     2:  2
+     1:  2
+     3:  2
+     4:  2
+
+/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/test/inputFile5.txt
+     Liczba kolorów:  3
+     kolor:  liczba wierzchołków
+     1:  2
+     2:  1
+     3:  1
+
+/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/test/inputFile2.txt
+     Liczba kolorów:  4
+     kolor:  liczba wierzchołków
+     1:  2
+     2:  2
+     3:  2
+     4:  2
+
