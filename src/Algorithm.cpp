@@ -42,7 +42,7 @@ GraphColoring Algorithm::algorithmSequence(const Graph &graph)
 }
 
 GraphColoring Algorithm::algorithmIndependent(const Graph &graph)
-{   ///TODO independent set
+{
     GraphColoring graphColoring;
     set<int> colors;
     map<int, int> countColorUsing;
@@ -84,28 +84,33 @@ GraphColoring Algorithm::algorithmFull(const Graph &graph, GraphColoring &graphC
         for(auto const& value: graphColoring) { //gets possition of the vertex for the max and min color
             if(value.second == mostUsedColor)   maxPositionVertix = value.first;
             if(value.second == lessUsedColor)   minPositionVertix = value.first;
-            if(minPositionVertix > -1 && maxPositionVertix > -1)    break;
+            if(minPositionVertix > -1 && maxPositionVertix > -1){
+                break;
+            }
         }
+        int maxPositionVertixRemember = maxPositionVertix; //to remember most used color vertix
         //change color or gave another color
         set<int> colorUsed; //which colors already checked and not suitable
         colorUsed.insert(graphColoring[maxPositionVertix]); //insert forbidden color
         countColorUsing[graphColoring[maxPositionVertix]]--; //decreases using of this color
         graphColoring[maxPositionVertix] = lessUsedColor; //gave new color
         colorUsed.insert(lessUsedColor); //set new color as forbidden color
+        int newColor = getColor(colors, lastPositionOfPresentColors);
         for(auto const &ent2 : (graph.find(maxPositionVertix)) -> second) {
-            colorUsed.insert(graphColoring[ent2.first]); //the color of the neighbour is forbidden
             if(ent2.second){    //it's ent1's neighbour
+                colorUsed.insert(graphColoring[ent2.first]); //the color of the neighbour is forbidden
                 while(graphColoring[ent2.first] == graphColoring[maxPositionVertix]){  //is neighbour has the same color?
-                    int newColor = getColor(colors, lastPositionOfPresentColors);
-                    while(!isColorAllowed(newColor, colorUsed))
+                    //int newColor = getColor(colors, lastPositionOfPresentColors);
+                    while(!isColorAllowed(newColor, colorUsed)
+                        || (countColorUsing[graphColoring[maxPositionVertixRemember]] + 1 <= countColorUsing[newColor])){
                         newColor = getColor(colors, newColor);
+                    }
                     graphColoring[maxPositionVertix] = newColor;
                     colorUsed.insert(graphColoring[maxPositionVertix]); //insert forbidden color
                 }
             }
         }
         countColorUsing[graphColoring[maxPositionVertix]]++;
-
         /*cout << "Justice coloring false lastColor: " << lastPositionOfPresentColors
             << " max(" << maxPositionVertix << "): "<< mostUsedColor << "  min(" << minPositionVertix << "): "<< lessUsedColor << endl;*/
         //cout << "Justice color checking false change color for vertix " << "" << maxPositionVertix << " from " << mostUsedColor << " to " <<  graphColoring[maxPositionVertix] << endl;
@@ -198,8 +203,8 @@ bool Algorithm::isJusticeColoring(map<int, int> &countColorUsing)
     int maxColorCount = countColorUsing.begin()->second;
     int minColorCount = countColorUsing.begin()->second;
     for(auto const &ent: countColorUsing){
-        if(maxColorCount < ent.second) maxColorCount = ent.second;
-        if(minColorCount > ent.second) minColorCount = ent.second;
+        if(maxColorCount <= ent.second) maxColorCount = ent.second;
+        if(minColorCount >= ent.second) minColorCount = ent.second;
         if(abs(maxColorCount - minColorCount) > 1) return false;
     }
     return true;

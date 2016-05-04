@@ -37,7 +37,7 @@ OutputInf OutputFile::generateFinalOutput(GraphColoring& graphColoring_)
     return outInf;
 }
 
-std::string OutputFile::getOutput(GraphColoring &graphColoringSeq, GraphColoring &graphColoringInd)
+std::string OutputFile::getOutput(GraphColoring &graphColoringSeq, GraphColoring &graphColoringInd, long double timeAlg1, long double timeAlg2)
 {
     std::stringstream ss;
     OutputInf resultSequence = generateFinalOutput(graphColoringSeq);
@@ -45,6 +45,8 @@ std::string OutputFile::getOutput(GraphColoring &graphColoringSeq, GraphColoring
     ss << endl;
     ss << myFill() << "Sequence" << myFill() << "|" << myFill() << "Independent" << myFill() << endl;
     ss << myFill() << "        " << myFill() << "|" << myFill() << "           " << myFill() << endl;
+    ss << myFill() << "" << myFill(9) << "Czas wykonania" << myFill(9) << "" << myFill() << endl;
+    ss << myFill() << timeAlg1 << myFill(17) << "|" << myFill() << timeAlg2 << myFill() << endl;
     ss << myFill() << "" << myFill(9) << "Liczba kolorow uzytych" << myFill(9) << "" << myFill() << endl;
     ss << myFill() << resultSequence.numberOfColors << myFill(17) << "|" << myFill() << resultIndependent.numberOfColors << myFill() << endl;
     ss << myFill() << "" << myFill(9) << "kolor:  liczba wierzchołków" << myFill(9) << "" << myFill() << endl;
@@ -75,6 +77,30 @@ std::string OutputFile::getOutput(GraphColoring &graphColoringSeq, GraphColoring
         else
             ss << myFill() << "        " << myFill();
         ss << endl;
+    }
+    return ss.str();
+}
+
+std::string OutputFile::generateGraph(int vertexes, int edges)
+{
+    std::stringstream ss;
+    std::list<pair<int, int>> graph;
+    for(int i = 1; i < vertexes; i++){ //generate simple graph
+        graph.push_back(make_pair(i, i + 1));
+        edges--;
+    }
+
+    for(int i = 1; i < vertexes; i++){ //generate simple graph
+        srand (time(NULL));
+        int howManyEdges = rand() % (edges / vertexes);
+        for(int j = howManyEdges; j > 0; j--){
+            graph.push_back(make_pair(i, rand() % (vertexes - i) + i + 1));
+            edges--;
+        }
+    }
+
+    for(auto const &ent1 : graph){
+        ss << ent1.first << " " << ent1.second << endl;
     }
     return ss.str();
 }

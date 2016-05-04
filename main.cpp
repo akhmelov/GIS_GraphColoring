@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <dirent.h> //for list of files in directory
+#include <ctime>
 
 #include "InputFIle.h"
 #include "OutputFile.h"
@@ -17,6 +18,23 @@ string myFill(int n = 10)
 
 int main(int argc, char ** argv)
 {
+    if(string(argv[1]) == "generate"){  //generate random files
+        int edges = 0, vertexes = 0;
+        char tmp[256];
+        cout << "Sciezka do pliku wyjsciowego: ";
+        cin.getline(tmp, 256);
+        cout << "Please entery numbers of vertexes: "; cin >> vertexes; cout << endl;
+        cout << "Please entery numbers of edges (edges > vertexes): "; cin >> edges; cout << endl;
+        if(!(edges > vertexes) || vertexes < 1) {cout << "Not true (edges > vertexes) or (vertexes < 0)"; return -1;}
+
+        string result = OutputFile().generateGraph(vertexes, edges);
+        ofstream outputFileLog;
+        outputFileLog.open(tmp, std::ofstream::in | std::ofstream::out | std::ofstream::app);
+        outputFileLog << result;
+        outputFileLog.close();
+        //cout << result;
+        return 0;
+    }
     string inFilePath;
     string outFilePath;
 
@@ -38,14 +56,22 @@ int main(int argc, char ** argv)
     InputFile inputFile;
     Graph graph = inputFile.makeGraph(inFilePath);
     cout << inputFile.displayGraph(graph);
-
     Algorithm algorithm;
+    long double timeAlg1 = time(0);
     GraphColoring graphColoringSeq = algorithm.algorithmSequence(graph);
+    timeAlg1 = time(0) - timeAlg1;
+    long double timeAlg2 = time(0);
     GraphColoring graphColoringInd = algorithm.algorithmIndependent(graph);
+    timeAlg2 = time(0) - timeAlg2;
 
-    cout << OutputFile().getOutput(graphColoringSeq, graphColoringInd) << endl;
+    string result = OutputFile().getOutput(graphColoringSeq, graphColoringInd, timeAlg1, timeAlg2);
+    ofstream outputFileLog;
+    outputFileLog.open(outFilePath, std::ofstream::in | std::ofstream::out | std::ofstream::app);
+    outputFileLog << result;
+    outputFileLog.close();
+    cout << result << endl;
 
-    if(true){ //for all files in one folder
+    if(false){ //for all files in one folder
         //char pathToDirectory[256] = ;
         string pathToDirectory = string("/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/test/");
         string pathToOutputDirectory = "/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/outputs/";
