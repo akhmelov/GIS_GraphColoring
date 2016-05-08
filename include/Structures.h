@@ -9,6 +9,10 @@ typedef std::map<int, std::map<int, bool> > Graph;
 typedef std::map<int, int> GraphColoring;
 
 struct OutputInf {
+    int noJusticeNumberOfColors = 0;
+    std::map<int, int> noJusticeCountColorUsing;
+
+
     int numberOfColors = 0;
     std::map<int, int> countColorUsing;
 };

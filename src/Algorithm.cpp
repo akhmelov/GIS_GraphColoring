@@ -10,13 +10,27 @@ Algorithm::~Algorithm()
     //dtor
 }
 
-GraphColoring Algorithm::algorithmSequence(const Graph &graph)
+GraphColoring Algorithm::algorithmSequence(const Graph &graph, OutputInf &outputInf)
 {
     GraphColoring graphColoring;
     set<int> colors;
     map<int, int> countColorUsing;
     //start simple coloring algorithm
-    for(auto const &ent1 : graph) {
+
+    //sort graph according to degree of vertix
+    Graph tmpGraph = graph;
+    list<int> sortedVetixes;
+    while(tmpGraph.size() > 0){
+        int vertix = vertexMinMaxDegree(tmpGraph, false);
+        tmpGraph.erase(vertix);
+        sortedVetixes.push_back(vertix);
+    }
+    //sort graph according to degree of vertix end
+
+
+    for(auto const &ent : sortedVetixes) {
+        pair<int, std::map<int, bool>> ent1 = make_pair(ent, (graph.find(ent)) -> second);
+    //for(auto const &ent1 : graph) {
         set<int> colorUsed; //which colors already checked and not suitable
         graphColoring[ent1.first] = getColor(colors, 0);
         colorUsed.insert(graphColoring[ent1.first]); //insert forbidden color
@@ -34,14 +48,15 @@ GraphColoring Algorithm::algorithmSequence(const Graph &graph)
         }
         countColorUsing[graphColoring[ent1.first]]++;
     }
+    outputInf.noJusticeNumberOfColors = colors.size();
     //end of the simple coloring algorithm
-    for(auto const &ent: countColorUsing){
+    /*for(auto const &ent: countColorUsing){
         //cout << "Sequence algorithm: color " << ent.first << " has " << ent.second << " vertix(ces)" <<  endl;
-    }
+    }*/
     return algorithmFull(graph, graphColoring, countColorUsing, colors);
 }
 
-GraphColoring Algorithm::algorithmIndependent(const Graph &graph)
+GraphColoring Algorithm::algorithmIndependent(const Graph &graph, OutputInf &outputInf)
 {
     GraphColoring graphColoring;
     set<int> colors;
@@ -54,7 +69,7 @@ GraphColoring Algorithm::algorithmIndependent(const Graph &graph)
     while(graph_.size() != 0){  //graph without visited vertexes
         tmpGraph = graph_; //graph without visited vertexes, but with neighbours
         while(tmpGraph.size() != 0){    //graph without visited vertexes' neighbours
-            int vertex = vertexMinDegree(tmpGraph); //get vertex with minimum degree
+            int vertex = vertexMinMaxDegree(tmpGraph); //get vertex with minimum degree
             if(vertex == -1) break;
             countColorUsing[newColor]++;  graphColoring[vertex] = newColor; //set color
             removeNeighbours(vertex, tmpGraph);
@@ -64,10 +79,11 @@ GraphColoring Algorithm::algorithmIndependent(const Graph &graph)
         newColor = getColor(colors, newColor); //get next color
     }
 
+    outputInf.noJusticeNumberOfColors = colors.size();
     //end of the simple coloring algorithm
-    for(auto const &ent: countColorUsing){
+    /*for(auto const &ent: countColorUsing){
         //cout << "Independent algorithm: color " << ent.first << " has " << ent.second << " vertix(ces)" <<  endl;
-    }
+    }*/
     return algorithmFull(graph, graphColoring, countColorUsing, colors);
 }
 
@@ -101,8 +117,7 @@ GraphColoring Algorithm::algorithmFull(const Graph &graph, GraphColoring &graphC
                 colorUsed.insert(graphColoring[ent2.first]); //the color of the neighbour is forbidden
                 while(graphColoring[ent2.first] == graphColoring[maxPositionVertix]){  //is neighbour has the same color?
                     //int newColor = getColor(colors, lastPositionOfPresentColors);
-                    while(!isColorAllowed(newColor, colorUsed)
-                        || (countColorUsing[graphColoring[maxPositionVertixRemember]] + 1 <= countColorUsing[newColor])){
+                    while(!isColorAllowed(newColor, colorUsed) || (countColorUsing[graphColoring[maxPositionVertixRemember]] + 1 <= countColorUsing[newColor])){
                         newColor = getColor(colors, newColor);
                     }
                     graphColoring[maxPositionVertix] = newColor;
@@ -117,9 +132,9 @@ GraphColoring Algorithm::algorithmFull(const Graph &graph, GraphColoring &graphC
 
     }
     //end justice coloring
-    for(auto const &ent: countColorUsing){
+    /*for(auto const &ent: countColorUsing){
         //cout << "Full algorithm: color " << ent.first << " has " << ent.second << " vertix(ces)" <<  endl;
-    }
+    }*/
     return graphColoring;
 }
 
@@ -133,12 +148,15 @@ void Algorithm::removeNeighbours(int vertex, Graph &graph)
     }
 }
 
-int Algorithm::vertexMinDegree(const Graph &graph)
+int Algorithm::vertexMinMaxDegree(const Graph &graph, bool max)
 {
-    pair<int, int> vertex(-1, INT_MAX); //<vertex, degree>
+    int startDegree;
+    if(max) startDegree = INT_MAX; else startDegree = INT_MIN;
+    pair<int, int> vertex(-1, startDegree); //<vertex, degree>
     for(auto const &ent1 : graph) {
         int tmpDegree = getDegreeOfVertex(ent1.first, graph);
-        if(tmpDegree < vertex.second) vertex = make_pair(ent1.first, ent1.second.size());
+        if(tmpDegree < vertex.second && max) vertex = make_pair(ent1.first, ent1.second.size());
+        if(tmpDegree > vertex.second && !max) vertex = make_pair(ent1.first, ent1.second.size());
     }
     return vertex.first;
 }

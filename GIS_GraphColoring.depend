@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1462305272 source:/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/main.cpp
+1462657526 source:/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/main.cpp
 	<iostream>
 	<stdio.h>
 	<string.h>
@@ -9,11 +9,12 @@
 	"OutputFile.h"
 	"Algorithm.h"
 
-1462349875 source:/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/src/Algorithm.cpp
+1462702223 source:/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/src/Algorithm.cpp
 	"Algorithm.h"
 
-1462283091 /home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/include/Algorithm.h
+1462657394 /home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/include/Algorithm.h
 	<vector>
+	<list>
 	<set>
 	<algorithm>
 	<cmath>
@@ -30,12 +31,12 @@
 	<map>
 	"Structures.h"
 
-1462291645 source:/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/src/OutputFile.cpp
+1462702065 source:/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/src/OutputFile.cpp
 	"OutputFile.h"
 	<algorithm>
 	<fstream>
 
-1462291645 /home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/include/OutputFile.h
+1462657504 /home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/include/OutputFile.h
 	<string>
 	<set>
 	<sstream>
@@ -44,7 +45,7 @@
 	<time.h>
 	"Structures.h"
 
-1462283091 /home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/include/Structures.h
+1462652634 /home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/include/Structures.h
 	<iostream>
 	<vector>
 	<map>

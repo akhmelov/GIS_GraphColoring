@@ -5,7 +5,7 @@
 
 using namespace std;
 
-std::vector< std::pair<int, unsigned int> > OutputFile::computeStatistics(GraphColoring& graphColoring_)
+std::vector< std::pair<int, unsigned int> > OutputFile::computeStatistics(GraphColoring& graphColoring_, OutputInf &result)
 {
     std::vector< std::pair<int, unsigned int> > coloursHistogram_;
     for(GraphColoring::iterator it = graphColoring_.begin(); it != graphColoring_.end(); ++it)
@@ -25,10 +25,9 @@ std::vector< std::pair<int, unsigned int> > OutputFile::computeStatistics(GraphC
     return coloursHistogram_;
 }
 
-OutputInf OutputFile::generateFinalOutput(GraphColoring& graphColoring_)
+OutputInf OutputFile::generateFinalOutput(GraphColoring& graphColoring_, OutputInf &outInf)
 {
-    OutputInf outInf;
-    std::vector< std::pair<int, unsigned int> > coloursHistogram_ = computeStatistics(graphColoring_);
+    std::vector< std::pair<int, unsigned int> > coloursHistogram_ = computeStatistics(graphColoring_, outInf);
     outInf.numberOfColors = coloursHistogram_.size();
     for(vector< pair<int, unsigned int> >::iterator it = coloursHistogram_.begin(); it != coloursHistogram_.end(); ++it)
     {
@@ -37,17 +36,45 @@ OutputInf OutputFile::generateFinalOutput(GraphColoring& graphColoring_)
     return outInf;
 }
 
-std::string OutputFile::getOutput(GraphColoring &graphColoringSeq, GraphColoring &graphColoringInd, long double timeAlg1, long double timeAlg2)
+std::string OutputFile::getSimpleOutput(GraphColoring &graphColoring, OutputInf &result)
 {
     std::stringstream ss;
-    OutputInf resultSequence = generateFinalOutput(graphColoringSeq);
-    OutputInf resultIndependent = generateFinalOutput(graphColoringInd);
+    generateFinalOutput(graphColoring, result);
+    ss << endl;
+    ss << "Liczba kolorow uzytych: " <<  result.numberOfColors << endl << endl;
+    ss << "kolor:  liczba wierzchołków" << endl;
+    for(auto const &ent1 : result.countColorUsing){
+        ss << ent1.first << ": " << ent1.second << endl;
+    }
+
+    ss << endl;
+    ss << "wierzchołek:  kolor" << endl;
+    for(auto const &ent1 : graphColoring){
+        ss << ent1.first << ": " << ent1.second << endl;
+    }
+
+    return ss.str();
+}
+
+std::string OutputFile::getOutput(GraphColoring &graphColoringSeq, GraphColoring &graphColoringInd, OutputInf &resultSequence, OutputInf &resultIndependent,
+    long double timeAlg1, long double timeAlg2)
+{
+    std::stringstream ss;
+    generateFinalOutput(graphColoringSeq, resultSequence);
+    generateFinalOutput(graphColoringInd, resultIndependent);
     ss << endl;
     ss << myFill() << "Sequence" << myFill() << "|" << myFill() << "Independent" << myFill() << endl;
     ss << myFill() << "        " << myFill() << "|" << myFill() << "           " << myFill() << endl;
     ss << myFill() << "" << myFill(9) << "Czas wykonania" << myFill(9) << "" << myFill() << endl;
     ss << myFill() << timeAlg1 << myFill(17) << "|" << myFill() << timeAlg2 << myFill() << endl;
-    ss << myFill() << "" << myFill(9) << "Liczba kolorow uzytych" << myFill(9) << "" << myFill() << endl;
+
+    ss << myFill() << "" << myFill(9) << "Liczba kolorow uzytych for table spr, (nie spr)" << myFill(9) << "" << myFill() << endl;
+    ss << myFill() << resultSequence.numberOfColors << ", (" << resultSequence.noJusticeNumberOfColors << ")" << myFill(17) << "|"
+        << myFill() << resultIndependent.numberOfColors << ", (" << resultIndependent.noJusticeNumberOfColors << ")" << myFill() << endl;
+
+    ss << myFill() << "" << myFill(9) << "Liczba kolorow uzytych (nie sprawedliwe)" << myFill(9) << "" << myFill() << endl;
+    ss << myFill() << resultSequence.noJusticeNumberOfColors << myFill(17) << "|" << myFill() << resultIndependent.noJusticeNumberOfColors << myFill() << endl;
+    ss << myFill() << "" << myFill(9) << "Liczba kolorow uzytych (sprawedliwe)" << myFill(9) << "" << myFill() << endl;
     ss << myFill() << resultSequence.numberOfColors << myFill(17) << "|" << myFill() << resultIndependent.numberOfColors << myFill() << endl;
     ss << myFill() << "" << myFill(9) << "kolor:  liczba wierzchołków" << myFill(9) << "" << myFill() << endl;
     for(map<int, int>::iterator it1 = resultSequence.countColorUsing.begin(), it2 = resultIndependent.countColorUsing.begin();

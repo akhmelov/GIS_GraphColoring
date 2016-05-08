@@ -11,11 +11,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-<<<<<<< HEAD
-				<Option parameters="inputFile.txt outputFile.txt" />
-=======
-				<Option parameters="/home/wiktor/Pulpit/GIS_GraphColoring/inputFile.txt /home/wiktor/Pulpit/GIS_GraphColoring/outputFile.txt" />
->>>>>>> 500e7f69a38f049a4051b1f760adbd864b438f1a
+				<Option parameters="/home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/test2/1_1 /home/akhmelov/home/studia/GIS/Project/GIS_GraphColoring/output.txt" />
 				<Compiler>
 					<Add option="-g" />
 					<Add directory="include" />
